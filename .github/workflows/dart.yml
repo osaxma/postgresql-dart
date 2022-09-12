@@ -24,6 +24,8 @@ jobs:
           POSTGRES_USER: dart
         ports:
           - 5432:5432
+        volumes:
+          - ${{ github.workspace }}/test/custom_config/postgresql.conf:/etc/postgresql/postgresql.conf
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -32,6 +34,11 @@ jobs:
           --health-retries 5
 
     steps:
+      # This solves an issue that prevents mounting the volume due to `checkout` cleanup job
+      # For more details, see: https://github.com/actions/checkout/issues/211#issuecomment-611986243
+      - name: Change owner for workspace to prevent volume mounting issue in checkout action
+        run: sudo chown -R $USER:$USER ${{ github.workspace }}
+
       - uses: actions/checkout@v2
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
