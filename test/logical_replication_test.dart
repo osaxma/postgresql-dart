@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:postgres/messages.dart';
 import 'package:postgres/postgres.dart';
@@ -16,12 +16,12 @@ void main() {
   //       the replication configuration before spinning up the container either
   //       by passing image arguments or restarting the container after altering
   //       the database configurations (required for replication configs).
-  if (Platform.environment.containsKey('GITHUB_ACTION')) {
-    test('NO LOGICAL REPLICATION TESTS ARE RUNNING.', () {
-      // no-op
-    });
-    return;
-  }
+  // if (Platform.environment.containsKey('GITHUB_ACTION')) {
+  //   test('NO LOGICAL REPLICATION TESTS ARE RUNNING.', () {
+  //     // no-op
+  //   });
+  //   return;
+  // }
 
   usePostgresDocker();
 
