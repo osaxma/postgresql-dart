@@ -7,13 +7,13 @@ import 'package:test/test.dart';
 const _kContainerName = 'postgres-dart-test';
 
 void usePostgresDocker() {
-  bool isGithubAction() => Platform.environment.containsKey('GITHUB_ACTION');
+  // bool isGithubAction() => Platform.environment.containsKey('GITHUB_ACTION');
 
   setUpAll(() async {
-    if (isGithubAction()) {
-      // Postgres already running
-      return;
-    }
+    // if (isGithubAction()) {
+    //   // Postgres already running
+    //   return;
+    // }
 
     final isRunning = await _isPostgresContainerRunning();
     if (isRunning) {
@@ -70,9 +70,9 @@ void usePostgresDocker() {
   });
 
   tearDownAll(() async {
-    if (isGithubAction()) {
-      return;
-    }
+    // if (isGithubAction()) {
+    //   return;
+    // }
     await Process.run('docker', ['stop', _kContainerName]);
   });
 }

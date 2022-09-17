@@ -149,12 +149,12 @@ void main() {
   // These tests are disabled, as we'd need to setup ci/pg_hba.conf into the CI
   // postgres instance first.
   // TODO: re-enable these tests after pg_hba.conf is used
-  if (Platform.environment.containsKey('GITHUB_ACTION')) {
-    test('NO CONNECTION TEST IS RUNNING.', () {
-      // no-op
-    });
-    return;
-  }
+  // if (Platform.environment.containsKey('GITHUB_ACTION')) {
+  //   test('NO CONNECTION TEST IS RUNNING.', () {
+  //     // no-op
+  //   });
+  //   return;
+  // }
 
   group('Connection lifecycle', () {
     late PostgreSQLConnection conn;

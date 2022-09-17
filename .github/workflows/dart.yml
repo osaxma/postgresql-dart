@@ -15,29 +15,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: dart_test
-          POSTGRES_PASSWORD: dart
-          POSTGRES_USER: dart
-        ports:
-          - 5432:5432
-        volumes:
-          - ${{ github.workspace }}/test/custom_config/postgresql.conf:/etc/postgresql/postgresql.conf
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    # services:
+    #   postgres:
+    #     image: postgres:latest
+    #     env:
+    #       POSTGRES_DB: dart_test
+    #       POSTGRES_PASSWORD: dart
+    #       POSTGRES_USER: dart
+    #     ports:
+    #       - 5432:5432
+    #     volumes:
+    #       - ${{ github.workspace }}/test/custom_config/postgresql.conf:/etc/postgresql/postgresql.conf
+    #     # Set health checks to wait until postgres has started
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
 
     steps:
       # This solves an issue that prevents mounting the volume due to `checkout` cleanup job
       # For more details, see: https://github.com/actions/checkout/issues/211#issuecomment-611986243
-      - name: Change owner for workspace to prevent volume mounting issue in checkout action
-        run: sudo chown -R $USER:$USER ${{ github.workspace }}
+      # - name: Change owner for workspace to prevent volume mounting issue in checkout action
+      #   run: sudo chown -R $USER:$USER ${{ github.workspace }}
 
       - uses: actions/checkout@v2
 
@@ -49,6 +49,9 @@ jobs:
 
       - name: Install dependencies
         run: dart pub get
+
+      - name: pull postgres image
+        run: docker pull postgres:latest
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       # - name: Verify formatting
@@ -62,4 +65,4 @@ jobs:
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
       - name: Run tests
-        run: dart test
+        run: dart test -j 1
