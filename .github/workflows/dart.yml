@@ -38,7 +38,7 @@ jobs:
       # pre-pull the image so `usePostgresDocker` does not delay which may causes 
       # tests to timeout
       - name: pull latest postgres image
-        run: docker pull postgres:14.4
+        run: docker pull postgres:14
 
       # Run all tests with a concurency of "1" to allow each test to run independently. 
       #   This is mainly to prevent `tearDownAll` in `usePostgresDocker` from stoping
