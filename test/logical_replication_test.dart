@@ -56,6 +56,7 @@ void main() {
       // note: primary keys are necessary for replication to work and they are
       //       used as an identity replica (to allow update & delete) on tables
       //       that are part of a publication.
+      // permission denied for schema public (see: https://github.com/isoos/postgresql-dart/pull/73)
       await changesConn.execute('create table $changesTable '
           '(id int GENERATED ALWAYS AS IDENTITY, value text, '
           'PRIMARY KEY (id));');
